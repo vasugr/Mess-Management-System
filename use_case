@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+
+actor Student
+actor Mess_Worker
+actor Mess_Manager
+
+rectangle worker{
+    Student-->(Login)
+    (Register) .> (Login) : <<include>>
+    Mess_Worker-->(Login)
+    Mess_Manager-->(Login)
+    Mess_Worker-->(Apply for\nleave)
+    Mess_Worker-->(View attendence\nand salary)
+}
+rectangle student{
+    Student-->(View mess\nmenu)
+    Student-->(View mess\ncharges)
+    (view mess\nfines) .> (View mess\ncharges) : <<include>>
+    Student-->(View mess\nduties)
+    Student-->(Choose preference)
+    Student-->(Complaint)
+}
+rectangle manager{
+    
+}
+@enduml

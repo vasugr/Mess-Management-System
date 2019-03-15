@@ -8,10 +8,10 @@ actor Mess_Manager
 rectangle worker{
     Student-->(Login)
     (Register) .> (Login) : <<include>>
-    Mess_Worker-->(Login)
+    (Login)<--Mess_Worker
     Mess_Manager-->(Login)
-    Mess_Worker-->(Apply for\nleave)
-    Mess_Worker-->(View attendence\nand salary)
+    (Apply for\nleave)<--Mess_Worker
+    (View attendence\nand salary)<--Mess_Worker
 }
 rectangle student{
     Student-->(View mess\nmenu)
@@ -20,8 +20,13 @@ rectangle student{
     Student-->(View mess\nduties)
     Student-->(Choose preference)
     Student-->(Complaint)
+    
 }
 rectangle manager{
-    
+    (View worker's\ndetails)<--Mess_Manager
+    (View worker's\ndetails) .> (grant leave) : <<extend>>
+    (View grocery\nlist)<--Mess_Manager
+    (Track status\nof delivery) .> (View grocery\nlist) : <<extend>>
+    (Manage complaint\nportal)<--Mess_Manager
 }
 @enduml

@@ -1,5 +1,19 @@
 @startuml
 left to right direction
+skinparam handwritten true
+skinparam usecase {
+	BackgroundColor Yellow
+	BorderColor Yellow
+
+	BackgroundColor<< Main >> Yellow
+	BorderColor<< Main >> Yellow
+	
+	ArrowColor Olive
+	ActorBorderColor black
+	ActorFontName Courier
+
+	ActorBackgroundColor<< Human >> Black
+}
 
 actor Student
 actor Mess_Worker

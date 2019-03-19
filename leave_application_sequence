@@ -1,0 +1,62 @@
+@startuml
+
+title Leave application process
+
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+box "Mess worker side"
+actor MessWorker
+participant "Application-1" as W
+end box
+box "server end"
+participant "Server" as S
+participant "Database" as D
+end box
+box "Mess Manager side"
+participant "Application-2" as M
+actor Manager
+end box
+
+MessWorker -> W: provide no. of days, reason
+activate W
+
+W -> S: Request Validation
+activate S
+S -> D: Check no. of available leaves
+activate D
+alt if applicable
+    D--> S:send response
+    S-->W:Validate
+    W-->MessWorker: Applied
+else if not applicable
+    D-->S:send response
+    S--> W:error message
+    W-->MessWorker: Cannot apply
+end
+...
+Manager -> M:check for leave applications
+activate M
+M->S:Retrieve applications 
+S-->M : show application forms
+
+alt if granted
+    Manager -> M: Grant leave
+    M->S:Send confirmation
+    S->D:Update Database
+    deactivate D
+    S-->W:Forward confirmation
+    W-->MessWorker:Leave granted
+else if declined
+    Manager->M:decline the application
+    M->S:Send message
+    deactivate M
+    S-->W:Forward message
+    deactivate S
+    W-->MessWorker:Leave denied
+    deactivate W
+end
+
+@enduml

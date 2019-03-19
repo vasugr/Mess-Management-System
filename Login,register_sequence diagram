@@ -1,0 +1,58 @@
+@startuml
+title Login/registration process
+
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+box "user side"
+actor User
+participant "Application" as A
+end box
+box "server side"
+participant "Server" as B
+participant "Database" as C
+end box
+...
+User -> A: Provide details
+activate A
+
+A -> B: Upload on server
+activate B
+
+B -> C: Store
+activate C
+C --> B: Validate
+
+
+B --> A: Account created
+
+
+A --> User: Done
+
+...
+
+
+
+User -> A: login (username and password)
+A -> B: Request validation
+B -> C: Lookup
+C --> B:Validate
+
+B --> A: Send validation
+
+A --> User: Accept/reject login
+
+...
+User -> A: Forgot/ Change Password
+A -> B: request for security questions
+B->C:Lookup
+C-->B:Send
+deactivate C
+B-->A: Display questions
+deactivate B
+A->A:Verify answers
+A-->User:login
+deactivate A
+
+@enduml

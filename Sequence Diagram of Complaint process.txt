@@ -1,0 +1,22 @@
+@startuml
+autonumber
+actor Student
+Student -> Complaint_Portal : Enter description of complaint
+activate Complaint_Portal
+actor Mess_Manager
+Complaint_Portal -> Mess_Manager : Complaint details
+alt if sensible complaint
+     alt if complaint can be solved
+	Mess_Manager -> Mess_Manager : Solve the complaint
+        Mess_Manager --> Complaint_Portal : Complaint solved
+        Complaint_Portal --> Student : Complaint solved
+     else if complaint can't be solved
+        Mess_Manager --> Complaint_Portal : Complaint is complex
+        Complaint_Portal --> Student : Display regret message
+     end	
+else if not sensible complaint
+	Mess_Manager --> Complaint_Portal: Invalid
+	Complaint_Portal --> Student : Enter valid complaint
+        deactivate Complaint_Portal		
+end
+@enduml

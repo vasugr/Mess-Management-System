@@ -1,0 +1,64 @@
+@startuml
+Mess_Manager -up--|> User
+Mess_Worker -up--|> User
+Student -up--|> User
+User : -Sign_in()
+User : -Sign_up()
+User : -Change_Password()
+User : -Forgot_Password()
+class User
+{
+  -UserName : String
+  -Password : String 
+ }
+Student : -edit_preference_list()
+Student : +view_menu_list()
+class Student
+{
+-Roll_No : String
+-Mess_Charges : Double
+}
+Mess_Manager : -Leave_Approval()
+class Mess_Worker
+{
+-Salary : Double
+-Salary_Info : String
+}
+Mess_Worker : -Apply_for_Leave()
+class Groceries
+{
+  +Item_Name : String
+  +Price : Int
+  +Availability : Boolean
+}
+Groceries : #Place_Order()
+Groceries "1..*"-up-- "1"Mess_Manager
+class Menu_Card
+{
+  +Item_Name : String
+}
+Menu_Card -- Student
+Menu_Card --* Groceries
+class Complaint_Portal
+{
+  +Description : String
+}
+Complaint_Portal -up-- Student
+Complaint_Portal -up-- Mess_Manager
+class Leave_Application
+{
+  +Description : String
+  +Application_No : Int
+}
+Leave_Application "1..*" -- "1"Mess_Manager
+Leave_Application "1" -down--"1" Mess_Worker
+class Mess_Duty
+{
+  +Student_Name : String
+  +Date : String
+  +Status : String
+}
+Mess_Duty -- Student
+Mess_Manager : +Impose_Fine()
+Mess_Manager : +Pay_Salaries()
+@enduml
